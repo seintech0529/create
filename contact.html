@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ご相談フォーム | PC Build Consultant</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .contact-container {
+            width: 100%;
+            max-width: 800px;
+        }
+        /* Style adjustments for select options to fix color clashing */
+        select option {
+            background-color: #1a202c; /* Matches dark theme */
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="section-title">
+            <h2>ご相談フォーム</h2>
+            <p>理想のPCへの第一歩。プランを選択し、詳細をお聞かせください。</p>
+        </div>
+        <div class="contact-form glass">
+            <form id="pc-form">
+                <div class="form-group">
+                    <label for="plan">ご希望のプラン</label>
+                    <select id="plan" required>
+                        <option value="">プランを選択してください</option>
+                        <option value="light">ライト構成案（¥1,000）</option>
+                        <option value="standard">スタンダード・フルサポート（¥2,000）</option>
+                        <option value="pro">プロフェッショナル・ビルド（¥4,000）</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="purpose">主な利用目的</label>
+                    <select id="purpose" required>
+                        <option value="">目的を選択してください</option>
+                        <option value="gaming">ゲーミング</option>
+                        <option value="creative">動画編集・クリエイティブ</option>
+                        <option value="ai">AI学習・ディープラーニング</option>
+                        <option value="office">事務・ビジネス</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 10px; border: 1px solid var(--border);">
+                    <input type="checkbox" id="assembly" style="width: auto; margin: 0;">
+                    <label for="assembly" style="margin: 0; cursor: pointer;">組み立て代行を希望する（追加料金 ¥10,000〜）</label>
+                </div>
+                <div class="form-group">
+                    <label for="budget">ご予算（パーツ代目安）</label>
+                    <input type="text" id="budget" placeholder="例：20万円程度" required>
+                </div>
+                <div class="form-group">
+                    <label for="look">希望する外観</label>
+                    <input type="text" id="look" placeholder="例：白一色、LEDで光らせたい、小型がいい 等">
+                </div>
+                <div class="form-group">
+                    <label for="message">その他ご要望</label>
+                    <textarea id="message" rows="5" placeholder="現在の悩みや、こだわりたいポイントをご記入ください。"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">この内容で相談する（無料）</button>
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 1rem; line-height: 1.8;">
+                    ※ご提案する構成案や拡張計画は、現時点での情報に基づく予測です。将来のパーツ供給状況や規格変更、相性問題等について完全に保証するものではなく、一切の責任を負いかねます。また、パーツの送料およびPC本体の配送に関わる費用はすべてお客様のご負担となります。
+                </p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="index.html" style="color: var(--text-muted); text-decoration: none;">← トップページに戻る</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        // Auto-fill plan if passed in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get('plan');
+        if (plan) {
+            document.getElementById('plan').value = plan;
+        }
+    </script>
+</body>
+</html>

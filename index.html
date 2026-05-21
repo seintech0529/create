@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCraft | ウェブサイト制作・デザイン相談</title>
+    <meta name="description" content="ご希望に合わせて、丁寧なウェブサイト制作・デザインの相談を承ります。LP制作から個人サイトまで、お気軽にご相談ください。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..800&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Sidebar Navigation Styles */
+        .side-nav {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            z-index: 1000;
+        }
+
+        .nav-toggle {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: #111;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-20px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .side-nav.active .nav-links {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .side-nav.active .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .side-nav.active .nav-toggle span:nth-child(2) { opacity: 0; }
+        .side-nav.active .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .nav-links li {
+            margin-bottom: 15px;
+        }
+
+        .nav-links li:last-child {
+            margin-bottom: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            transition: color 0.3s;
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+        }
+
+        .nav-links a:hover {
+            color: #111;
+        }
+
+        @media (max-width: 1000px) {
+            .side-nav {
+                top: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="side-nav">
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#concept">Concept</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#colors">Colors</a></li>
+            <li><a href="#delivery">Delivery</a></li>
+            <li><a href="#flow">Flow</a></li>
+            <li><a href="#notes">Notes</a></li>
+            <li><a href="estimate.html" target="_blank">Order</a></li>
+            <li><a href="contact.html" target="_blank">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="wrapper fade-in">
+        <header class="header">
+            <div class="logo-container">
+                <img src="logo.png" alt="WebCraft Logo" class="site-logo">
+            </div>
+            <p class="subtitle">Web Design & Support</p>
+            <h1 class="site-title">WebCraft</h1>
+            <div class="header-cta" style="margin-top: 40px;">
+                <p class="cta-tagline" style="font-size: 1.1rem; margin-bottom: 20px; letter-spacing: 0.1em; color: #333;">あなたの想いを形にする、ウェブサイト制作</p>
+                <a href="estimate.html" target="_blank" class="btn-primary" style="padding: 12px 40px; font-size: 0.9rem;">制作の相談・お見積りはこちら</a>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="section" id="concept">
+                <h2 class="section-title">Concept</h2>
+                <div class="content-box">
+                    <p class="text-large">
+                        「やりたい」を形に。<br>
+                        ご希望のイメージに合わせて、<br>
+                        丁寧にウェブサイトを制作いたします。
+                    </p>
+                </div>
+            </section>
+
+            <section class="section" id="menu">
+                <h2 class="section-title">Service Menu</h2>
+                <div class="content-box">
+                    <div class="menu-header">
+                        <p>目的や予算に合わせた制作プラン</p>
+                        <p>基本着手金：¥5,000</p>
+                    </div>
+                    <ul class="menu-list">
+                        <li><span class="label">LP制作（1ページ）</span><span class="price">¥15,000~</span></li>
+                        <li><span class="label">スタンダードプラン（5P）</span><span class="price">¥40,000~</span></li>
+                        <li><span class="label">コーポレートサイト制作</span><span class="price">¥75,000~</span></li>
+                        <li><span class="label">お問い合わせフォーム実装</span><span class="price">¥2,500</span></li>
+                        <li><span class="label">保守・運用サポート</span><span class="price">¥2,500/月</span></li>
+                        <li><span class="label">独自ドメイン・サーバー設定</span><span class="price">¥2,500</span></li>
+                    </ul>
+                    <div class="menu-footer">
+                        <p>※レスポンシブ（スマホ対応）は全プラン標準装備</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="colors">
+                <h2 class="section-title">Design Style</h2>
+                <div class="content-box">
+                    <p class="text-large">ミニマル / モダン / コーポレート / ニュアンス</p>
+                    <p class="text-small">（お客様のブランドイメージに合わせた提案をいたします）</p>
+                </div>
+            </section>
+
+            <section class="section" id="delivery">
+                <h2 class="section-title">Timeline</h2>
+                <div class="content-box">
+                    <p class="text-large">最短2週間 〜 1.5ヶ月</p>
+                    <p class="text-small">（プラン内容や素材の準備状況により変動します）</p>
+                </div>
+            </section>
+
+            <section class="section" id="flow">
+                <h2 class="section-title">Workflow</h2>
+                <div class="content-box">
+                    <ol class="flow-list">
+                        <li><span>1</span>お問い合わせ</li>
+                        <li><span>2</span>ヒアリング</li>
+                        <li><span>3</span>お見積り・ご契約</li>
+                        <li><span>4</span>構成案・デザイン作成</li>
+                        <li><span>5</span>コーディング・実装</li>
+                        <li><span>6</span>内容確認・修正</li>
+                        <li><span>7</span>公開・納品</li>
+                        <li><span>8</span>アフターサポート</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="section" id="notes">
+                <h2 class="section-title">Policies</h2>
+                <div class="content-box">
+                    <ul class="notes-list">
+                        <li>着手金お支払い後の制作開始</li>
+                        <li>制作開始後のキャンセルは返金不可</li>
+                        <li>納品後1ヶ月間の無償修正対応</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="details">
+                <h2 class="section-title">Options</h2>
+                <div class="content-box">
+                    <ul class="notes-list">
+                        <li>ロゴ制作・バナー作成</li>
+                        <li>WordPress導入・カスタマイズ</li>
+                        <li>既存サイトのリニューアル</li>
+                        <li>ドメイン移管代行</li>
+                        <li>アクセス解析（GA4）導入</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <p class="cta-tagline" style="font-size: 1.2rem; margin-bottom: 25px; letter-spacing: 0.15em; font-weight: 500;">あなたのビジョンをウェブで表現する</p>
+                <a href="estimate.html" target="_blank" class="btn-primary">見積もり・制作相談はこちら</a>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 WebCraft.</p>
+        </footer>
+    </div>
+    <script>
+        const navToggle = document.getElementById('navToggle');
+        const sideNav = document.querySelector('.side-nav');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        navToggle.addEventListener('click', () => {
+            sideNav.classList.toggle('active');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                sideNav.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

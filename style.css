@@ -1,0 +1,346 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #111111;
+    --text-light: #666666;
+    --border-color: #d8d8d8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 18px;
+    line-height: 2;
+    letter-spacing: 0.08em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Animations */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 120px 20px 100px;
+}
+
+.subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    letter-spacing: 0.35em;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.site-title {
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-color);
+    text-transform: uppercase;
+}
+
+.logo-container {
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.site-logo {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    padding: 5px;
+    background: #fff;
+    transition: transform 0.5s ease;
+}
+
+.site-logo:hover {
+    transform: rotate(360deg);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+    width: 100%;
+}
+
+.section {
+    margin-bottom: 60px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 60px 50px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-color);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 0;
+}
+
+.section-title::after {
+    display: none;
+}
+
+.content-box {
+    text-align: center;
+    width: 100%;
+}
+
+.text-large {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.text-small {
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+/* Menu List */
+.menu-header {
+    margin-bottom: 30px;
+    font-size: 1rem;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+
+.menu-list {
+    list-style: none;
+    margin-bottom: 30px;
+    max-width: 100%;
+}
+
+.menu-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+    font-size: 1.15rem;
+}
+
+.menu-list li .label {
+    flex-shrink: 0;
+}
+
+.menu-list li::after {
+    content: '';
+    flex-grow: 1;
+    border-bottom: 1px dotted #bbbbbb;
+    margin: 0 15px;
+    position: relative;
+    top: -4px;
+}
+
+.menu-list li .price {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.menu-sub-note {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: -10px;
+    margin-bottom: 18px;
+    padding-left: 15px;
+    border-left: 2px solid var(--border-color);
+    text-align: left;
+}
+
+.menu-footer {
+    font-size: 1rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+/* Flow List */
+.flow-list {
+    list-style: none;
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+    max-width: 400px;
+}
+
+.flow-list li {
+    font-size: 1.15rem;
+    margin-bottom: 30px;
+    padding-left: 60px;
+    position: relative;
+    color: var(--text-color);
+}
+
+.flow-list li span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--text-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    background-color: #f9f9f9;
+}
+
+.flow-list li::after {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    width: 1px;
+    height: calc(100% + 30px - 40px);
+    background-color: var(--border-color);
+}
+
+.flow-list li:last-child::after {
+    display: none;
+}
+
+/* Notes List */
+.notes-list {
+    list-style: none;
+    display: inline-block;
+    text-align: left;
+}
+
+.notes-list li {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    color: var(--text-color);
+}
+
+.notes-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: 5px;
+    background-color: var(--text-color);
+    border-radius: 50%;
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--text-color);
+    color: #ffffff;
+    text-decoration: none;
+    padding: 22px 70px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background-color: #333333;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--border-color);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.12em;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .header {
+        padding: 60px 20px 40px;
+    }
+    
+    .site-title {
+        font-size: 1.5rem;
+    }
+
+    .section {
+        padding: 30px 20px;
+        margin-bottom: 20px;
+    }
+    
+    .text-large {
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 16px 20px;
+    }
+}
