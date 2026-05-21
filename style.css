@@ -309,97 +309,6 @@ body {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Support Section */
-.support-intro {
-    font-size: 1rem;
-    color: var(--text-color);
-    margin-bottom: 40px;
-    line-height: 1.8;
-    text-align: left;
-    max-width: 800px;
-}
-
-.support-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    width: 100%;
-    margin-bottom: 40px;
-}
-
-.support-card {
-    background: #fdfdfd;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 30px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-}
-
-.support-card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-}
-
-.card-free h3 {
-    color: #2e7d32;
-}
-
-.card-paid h3 {
-    color: #c62828;
-}
-
-.support-card ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.support-card ul li {
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-    padding-left: 20px;
-    position: relative;
-    color: var(--text-color);
-}
-
-.card-free ul li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #2e7d32;
-    font-weight: bold;
-}
-
-.card-paid ul li::before {
-    content: '-';
-    position: absolute;
-    left: 0;
-    color: #c62828;
-    font-weight: bold;
-}
-
-.note-box {
-    background-color: #f9f9f9;
-    border-left: 4px solid var(--text-color);
-    padding: 20px;
-    border-radius: 0 8px 8px 0;
-    text-align: left;
-    width: 100%;
-}
-
-.note-box p {
-    font-size: 0.9rem;
-    color: var(--text-light);
-    margin-bottom: 8px;
-}
-
-.note-box p:last-child {
-    margin-bottom: 0;
-}
 /* Footer */
 .footer {
     text-align: center;
@@ -433,9 +342,5 @@ body {
     .btn-primary {
         width: 100%;
         padding: 16px 20px;
-    }
-    
-    .support-grid {
-        grid-template-columns: 1fr;
     }
 }
