@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estimate | WebCraft</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..800&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..800&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
     <style>
         /* Sidebar Navigation Styles */
@@ -31,7 +34,7 @@
             background: #fff;
             border: 1px solid #eee;
             border-radius: 50%;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
@@ -51,7 +54,7 @@
             padding: 20px;
             border-radius: 12px;
             border: 1px solid #eee;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(10px);
             opacity: 0;
             visibility: hidden;
@@ -65,9 +68,17 @@
             transform: translateX(0);
         }
 
-        .side-nav.active .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .side-nav.active .nav-toggle span:nth-child(2) { opacity: 0; }
-        .side-nav.active .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .side-nav.active .nav-toggle span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .side-nav.active .nav-toggle span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .side-nav.active .nav-toggle span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
 
         .nav-links li {
             margin-bottom: 15px;
@@ -102,9 +113,11 @@
         body {
             padding: 40px 20px;
         }
+
         .main-content {
             max-width: 900px;
         }
+
         /* Order Form Styles */
         .order-form {
             text-align: left;
@@ -190,6 +203,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="side-nav">
         <div class="nav-toggle" id="navToggle">
@@ -227,9 +241,10 @@
 
                     <div class="form-group">
                         <label>メールアドレス</label>
-                        <input type="email" placeholder="example@webcraft.jp" required style="width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 1rem;">
+                        <input type="email" placeholder="example@webcraft.jp" required
+                            style="width: 100%; padding: 12px; border: 1px solid #eee; border-radius: 8px; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 1rem;">
                     </div>
-                    
+
                     <div class="form-group">
                         <label>制作プラン・オプションの選択</label>
                         <div class="calc-options">
@@ -273,7 +288,9 @@
                     </div>
 
                     <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">この内容で相談する</button>
-                    <a href="index.html" style="display: block; text-align: center; margin-top: 20px; font-size: 0.85rem; color: #999; text-decoration: none;">← ホームに戻る</a>
+                    <a href="index.html"
+                        style="display: block; text-align: center; margin-top: 20px; font-size: 0.85rem; color: #999; text-decoration: none;">←
+                        ホームに戻る</a>
                 </form>
             </div>
         </main>
@@ -288,7 +305,7 @@
         const optionChecks = document.querySelectorAll('.option-check');
         const optTotalDisp = document.getElementById('optTotal');
         const grandTotalDisp = document.getElementById('grandTotal');
-        
+
         const BASE_FEE = 5000;
         const TAX_RATE = 1.1;
 
@@ -327,7 +344,7 @@
         // Form Submission Logic
         document.getElementById('orderForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            
+
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerText;
             submitBtn.disabled = true;
@@ -379,4 +396,5 @@
         });
     </script>
 </body>
+
 </html>
