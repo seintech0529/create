@@ -55,30 +55,21 @@ const stepObserver = new IntersectionObserver((entries) => {
 
 steps.forEach(step => stepObserver.observe(step));
 
-// --- フォーム送信処理 (本番用) ---
-// 将来的に Firebase や Supabase へ移行する場合は、この関数の中身を書き換えてください。
-async function submitFormToService(data) {
-    // Formspree などの外部フォームサービスのエンドポイント（ご自身のアカウントで発行したURLに置き換えてください）
-    const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
-    
-    // 実際のエンドポイントが設定されていない場合は、デモ用の処理を行います（エラー回避のため）
-    if (FORM_ENDPOINT.includes('YOUR_FORM_ID')) {
-        console.warn('Form endpoint is not configured. Simulating success.');
-        return new Promise(resolve => setTimeout(resolve, 1000));
-    }
+// --- フォーム送信処理 (本番用: Googleスプレッドシート連携) ---
+// ※本番の問い合わせデータは admin.html ではなく Googleスプレッドシート に保存されます。
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH8573DEAutE2ANOqLQ4d4LCcSdbCPlkciENKprfs0jQM_vAXwbz9qM_gwnN8C5DT06A/exec';
 
-    const response = await fetch(FORM_ENDPOINT, {
+async function sendToGoogleSheet(data) {
+    // ※注意: mode: 'no-cors' を使用しているため、ブラウザ側ではレスポンスの成功(200)・失敗を正確に判定できません。
+    // fetch自体がネットワークエラー等で失敗した場合のみcatchブロックに入ります。
+    await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            'Content-Type': 'text/plain;charset=utf-8'
         },
         body: JSON.stringify(data)
     });
-
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
 }
 
 // Form Handling
@@ -104,17 +95,19 @@ if (pcForm) {
 
         const formData = {
             type: 'Contact',
+            date: new Date().toISOString(),
             plan: plan,
             purpose: purpose,
             assembly: assembly,
             budget: budget,
             look: look,
-            message: message
+            message: message,
+            source: 'contact.html'
         };
         
         try {
-            await submitFormToService(formData);
-            alert('お問い合わせありがとうございます。内容を確認後、こちらからご連絡いたします。');
+            await sendToGoogleSheet(formData);
+            alert('送信しました');
             pcForm.reset();
         } catch (error) {
             console.error('Submission error:', error);
