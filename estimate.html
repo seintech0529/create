@@ -310,10 +310,29 @@
             check.addEventListener('change', calculate);
         });
 
+        // --- フォーム送信処理 (本番用: Googleスプレッドシート連携) ---
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzH8573DEAutE2ANOqLQ4d4LCcSdbCPlkciENKprfs0jQM_vAXwbz9qM_gwnN8C5DT06A/exec';
+
+        async function sendToGoogleSheet(data) {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
+                body: JSON.stringify(data)
+            });
+        }
+
         // Form Submission Logic
-        document.getElementById('orderForm').addEventListener('submit', (e) => {
+        document.getElementById('orderForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = '送信中...';
+
             const selectedOptions = Array.from(optionChecks)
                 .filter(c => c.checked)
                 .map(c => c.parentElement.textContent.trim().split(' (')[0])
@@ -326,16 +345,22 @@
                 email: document.querySelector('input[type="email"]').value,
                 message: document.querySelector('textarea').value,
                 options: selectedOptions || 'なし',
-                total: document.getElementById('grandTotal').textContent
+                total: document.getElementById('grandTotal').textContent,
+                source: 'estimate.html'
             };
 
-            const existingData = JSON.parse(localStorage.getItem('webCraftData') || '[]');
-            existingData.push(newData);
-            localStorage.setItem('webCraftData', JSON.stringify(existingData));
-
-            alert('お見積もりのご相談を送信しました。内容を確認次第、ご連絡いたします。');
-            e.target.reset();
-            calculate();
+            try {
+                await sendToGoogleSheet(newData);
+                alert('お見積もりのご相談を送信しました。内容を確認次第、ご連絡いたします。');
+                e.target.reset();
+                calculate();
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('送信に失敗しました。時間をおいて再度お試しください。');
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
         });
 
         // Navigation Toggle

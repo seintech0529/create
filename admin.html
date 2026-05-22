@@ -105,13 +105,86 @@
             padding: 40px;
             color: #ccc;
         }
+        
+        /* Login Screen */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 20px;
+        }
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .login-button {
+            width: 100%;
+            padding: 12px 15px;
+            background: #111;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-button:hover {
+            background: #333;
+        }
+        .error-message {
+            color: #ff5252;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="admin-container fade-in">
+    <!-- ログイン画面 -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <div class="login-title">管理者ログイン</div>
+            <div id="loginError" class="error-message">パスワードが間違っています。</div>
+            <input type="password" id="passwordInput" class="login-input" placeholder="パスワードを入力">
+            <button onclick="attemptLogin()" class="login-button">ログイン</button>
+            <p style="font-size: 0.8rem; color: #999; margin-top: 20px;">
+                ※この実装は静的サイト向けの簡易的な保護であり、本格的なセキュリティではありません。
+            </p>
+        </div>
+    </div>
+
+    <!-- 管理画面（初期状態は非表示） -->
+    <div class="admin-container fade-in" id="adminScreen" style="display: none;">
         <header class="admin-header">
             <div class="admin-title">WebCraft Admin</div>
-            <button onclick="clearData()" style="font-size: 0.8rem; color: #ff5252; background: none; border: 1px solid #ff5252; padding: 5px 10px; border-radius: 4px; cursor: pointer;">データを全削除</button>
+            <div>
+                <button onclick="clearData()" style="font-size: 0.8rem; color: #ff5252; background: none; border: 1px solid #ff5252; padding: 5px 10px; border-radius: 4px; cursor: pointer; margin-right: 10px;">データを全削除</button>
+                <button onclick="logout()" style="font-size: 0.8rem; color: #555; background: none; border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px; cursor: pointer;">ログアウト</button>
+            </div>
         </header>
 
         <div class="stats-grid">
@@ -150,6 +223,7 @@
     </div>
 
     <script>
+        // ※注意: localStorageはデモ用。本番の問い合わせ管理には使用しない
         function loadData() {
             const data = JSON.parse(localStorage.getItem('webCraftData') || '[]');
             const body = document.getElementById('dataBody');
@@ -194,9 +268,72 @@
             }
         }
 
-        loadData();
-        // Refresh every 5 seconds if someone submits while open
-        setInterval(loadData, 5000);
+        // --- 認証機能 ---
+        // ※注意: ここで設定するパスワードハッシュは、ソースコード上に公開されるため
+        // 本格的なセキュリティ対策にはなりません。簡易的な閲覧制限としてご利用ください。
+        
+        // 変更箇所: 下記の TARGET_HASH にパスワードのハッシュ値を設定してください。
+        // 現在は「miraiya@」のSHA-256ハッシュ値です。
+        const TARGET_HASH = "5d40aaee3d6f786e8060a1942a92cc06ae51c1ad59b54f5f8b9dcf10a79264ef";
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        let refreshInterval;
+
+        function checkAuth() {
+            if (sessionStorage.getItem('adminAuth') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminScreen').style.display = 'block';
+                loadData();
+                // 5秒ごとの更新を開始
+                if (!refreshInterval) {
+                    refreshInterval = setInterval(loadData, 5000);
+                }
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminScreen').style.display = 'none';
+                if (refreshInterval) {
+                    clearInterval(refreshInterval);
+                    refreshInterval = null;
+                }
+            }
+        }
+
+        async function attemptLogin() {
+            const pwd = document.getElementById('passwordInput').value;
+            const hash = await sha256(pwd);
+            if (hash === TARGET_HASH) {
+                sessionStorage.setItem('adminAuth', 'true');
+                document.getElementById('loginError').style.display = 'none';
+                document.getElementById('passwordInput').value = '';
+                checkAuth();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            checkAuth();
+        }
+
+        // Enterキーでログイン
+        const passwordInput = document.getElementById('passwordInput');
+        if (passwordInput) {
+            passwordInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                }
+            });
+        }
+
+        // 初期チェック
+        checkAuth();
     </script>
 </body>
 </html>

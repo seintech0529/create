@@ -55,26 +55,74 @@ const stepObserver = new IntersectionObserver((entries) => {
 
 steps.forEach(step => stepObserver.observe(step));
 
+// --- フォーム送信処理 (本番用) ---
+// 将来的に Firebase や Supabase へ移行する場合は、この関数の中身を書き換えてください。
+async function submitFormToService(data) {
+    // Formspree などの外部フォームサービスのエンドポイント（ご自身のアカウントで発行したURLに置き換えてください）
+    const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+    
+    // 実際のエンドポイントが設定されていない場合は、デモ用の処理を行います（エラー回避のため）
+    if (FORM_ENDPOINT.includes('YOUR_FORM_ID')) {
+        console.warn('Form endpoint is not configured. Simulating success.');
+        return new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    const response = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+}
+
 // Form Handling
 const pcForm = document.getElementById('pc-form');
 
 if (pcForm) {
-    pcForm.addEventListener('submit', (e) => {
+    pcForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Simple visual feedback
         const submitBtn = pcForm.querySelector('button');
         const originalText = submitBtn.innerText;
         
         submitBtn.disabled = true;
         submitBtn.innerText = '送信中...';
         
-        setTimeout(() => {
-            alert('お問い合わせありがとうございます！24時間以内にご連絡いたします。');
+        // フォームデータの構築
+        const plan = document.getElementById('plan').value;
+        const purpose = document.getElementById('purpose').value;
+        const assembly = document.getElementById('assembly').checked ? '希望する' : '希望しない';
+        const budget = document.getElementById('budget').value;
+        const look = document.getElementById('look').value;
+        const message = document.getElementById('message').value;
+
+        const formData = {
+            type: 'Contact',
+            plan: plan,
+            purpose: purpose,
+            assembly: assembly,
+            budget: budget,
+            look: look,
+            message: message
+        };
+        
+        try {
+            await submitFormToService(formData);
+            alert('お問い合わせありがとうございます。内容を確認後、こちらからご連絡いたします。');
+            pcForm.reset();
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('送信に失敗しました。時間をおいて再度お試しください。');
+        } finally {
             submitBtn.innerText = originalText;
             submitBtn.disabled = false;
-            pcForm.reset();
-        }, 1500);
+        }
     });
 }
 
